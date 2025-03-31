@@ -12,16 +12,14 @@ namespace Pre.BookLibrary.Core.Services
         private readonly string DefaultLocation;
         private readonly FileMonitor fileMonitor;
 
-        // Define Events
         public event EventHandler<FileAccessEventArgs> FileWritten;
         public event EventHandler<FileAccessEventArgs> FileOpened;
 
         public FileService()
         {
-            DefaultLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets");
+            DefaultLocation = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "assets");
             fileMonitor = new FileMonitor();
 
-            // Ensure the Assets folder exists
             if (!Directory.Exists(DefaultLocation))
             {
                 Directory.CreateDirectory(DefaultLocation);
@@ -39,11 +37,11 @@ namespace Pre.BookLibrary.Core.Services
 
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
-                    writer.WriteLine("Query;Id;Title;Author;Genre;PublicationDate");
+                    writer.WriteLine("Query;Id;Title;Author;PublicationDate;Genre");
 
                     foreach (var book in books)
                     {
-                        writer.WriteLine($"{queryName};{book.Id};{book.Title};{book.Author};{book.Genre};{book.PublicationDate:yyyy-MM-dd}");
+                        writer.WriteLine($"{queryName};{book.Id};{book.Title};{book.Author};{book.PublicationDate:yyyy-MM-dd};{book.Genre}");
                     }
                 }
 

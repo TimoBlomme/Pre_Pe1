@@ -19,8 +19,6 @@ namespace Pre.BookLibrary.Core.Entities
             Timestamp = DateTime.Now;
             Username = Environment.UserName;
             FilePath = filePath;
-
-
         }
     }
 }

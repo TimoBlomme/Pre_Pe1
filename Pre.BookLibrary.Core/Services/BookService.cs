@@ -17,6 +17,8 @@ public class BookService : IBookService
 
     /*
         Voorbeeld: Haal alle boeken uit de database
+
+
     */
     public IEnumerable<Book> GetAllBooks()
     {
@@ -62,10 +64,10 @@ public class BookService : IBookService
         return _applicationDbContext.Books.GroupBy(b => b.Author).ToList();
     }
 
-    public IEnumerable<Book> GetBookTitles()
+    public IEnumerable<string> GetBookTitles()
     {
         return _applicationDbContext.Books
-                .Select(b => new Book { Title = b.Title }) 
+                .Select(b => b.Title) 
                 .ToList();
     }
 

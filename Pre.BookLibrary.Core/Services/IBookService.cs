@@ -42,7 +42,7 @@ namespace Pre.BookLibrary.Core.Services
         /*
          8. Haal alle titels op. 
          */
-        IEnumerable<Book> GetBookTitles();
+        IEnumerable<String> GetBookTitles();
         /*
          9. Controleer of er books bestaan voor een gegeven author. 
          */

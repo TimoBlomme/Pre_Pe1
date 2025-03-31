@@ -26,7 +26,9 @@ namespace Pre.BookLibrary.Core.Services
 
         private void LogToFile(FileAccessEventArgs e)
         {
-            string logPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, "assets", "fileAccessLog.txt");
+            string logPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName, 
+                                          "assets", 
+                                          "fileAccessLog.txt");
             using (StreamWriter writer = new StreamWriter(logPath, true))
             {
                 writer.WriteLine($"{e.Timestamp}: {e.Filename} accessed by {e.Username}");

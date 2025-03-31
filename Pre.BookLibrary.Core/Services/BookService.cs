@@ -17,8 +17,6 @@ public class BookService : IBookService
 
     /*
         Voorbeeld: Haal alle boeken uit de database
-
-
     */
     public IEnumerable<Book> GetAllBooks()
     {
@@ -37,38 +35,42 @@ public class BookService : IBookService
 
     public IEnumerable<Book> GetBooksSortedByAuthorAndDate()
     {
-        return _applicationDbContext.Books.OrderBy(b => b.Author).ThenBy(b => b.PublicationDate).ToList();
+        return _applicationDbContext.Books.OrderBy(b => b.Author)
+                                          .ThenBy(b => b.PublicationDate)
+                                          .ToList();
     }
 
     public IEnumerable<Book> GetBooksByGenre(string genre)
     {
-        return _applicationDbContext.Books.Where(b => b.Genre == genre).OrderBy(b => b.Title).ToList();
+        return _applicationDbContext.Books.Where(b => b.Genre == genre)
+                                          .OrderBy(b => b.Title)
+                                          .ToList();
     }
 
     public IEnumerable<Book> GetBooksByYearAndAuthor(int year, string author)
     {
         return _applicationDbContext.Books.Where(b => b.PublicationDate.Year == year && b.Author == author)
-                                              .OrderBy(b => b.Title)
-                                              .ToList();
+                                          .OrderBy(b => b.Title)
+                                          .ToList();
     }
 
     public IEnumerable<Book> GetBooksByAuthorAndGenre(string author, string genre)
     {
         return _applicationDbContext.Books.Where(b => b.Author == author && b.Genre == genre)
-                                              .OrderBy(b => b.Title)
-                                              .ToList();
+                                          .OrderBy(b => b.Title)
+                                          .ToList();
     }
 
     public List<IGrouping<string, Book>> NumberOfBooksGroupedByAuthor()
     {
-        return _applicationDbContext.Books.GroupBy(b => b.Author).ToList();
+        return _applicationDbContext.Books.GroupBy(b => b.Author)
+                                          .ToList();
     }
 
     public IEnumerable<string> GetBookTitles()
     {
-        return _applicationDbContext.Books
-                .Select(b => b.Title) 
-                .ToList();
+        return _applicationDbContext.Books.Select(b => b.Title) 
+                                          .ToList();
     }
 
     public bool CheckIfBooksFromAuthorExists(string author)
@@ -78,12 +80,16 @@ public class BookService : IBookService
 
     public IEnumerable<Book> GetLastFivePublished()
     {
-        return _applicationDbContext.Books.OrderByDescending(b => b.PublicationDate).Take(5).ToList();
+        return _applicationDbContext.Books.OrderByDescending(b => b.PublicationDate)
+                                          .Take(5)
+                                          .ToList();
     }
 
     public IEnumerable<string> GetUniqueGenres()
     {
-        return _applicationDbContext.Books.Select(b => b.Genre).Distinct().ToList();
+        return _applicationDbContext.Books.Select(b => b.Genre)
+                                          .Distinct()
+                                          .ToList();
     }
 
     public double GetAveragePublicationYear()
@@ -94,19 +100,24 @@ public class BookService : IBookService
     public string GetAuthorWithMostBooks()
     {
         return _applicationDbContext.Books.GroupBy(b => b.Author)
-                                              .OrderByDescending(g => g.Count())
-                                              .Select(g => g.Key)
-                                              .FirstOrDefault();
+                                          .OrderByDescending(g => g.Count())
+                                          .Select(g => g.Key)
+                                          .FirstOrDefault();
     }
 
     public string GetAverageNumberOfBooksPerAuthor()
     {
-        return (_applicationDbContext.Books.Count() / (double)_applicationDbContext.Books.Select(b => b.Author).Distinct().Count()).ToString("F2");
+        return (_applicationDbContext.Books.Count() / 
+                (double)_applicationDbContext.Books.Select(b => b.Author)
+                                                   .Distinct()
+                                                   .Count())
+                                                   .ToString("F2");
     }
 
     public IEnumerable<Book> GetBooksWithLongestTitle()
     {
         int maxLength = _applicationDbContext.Books.Max(b => b.Title.Length);
-        return _applicationDbContext.Books.Where(b => b.Title.Length == maxLength).ToList();
+        return _applicationDbContext.Books.Where(b => b.Title.Length == maxLength)
+                                          .ToList();
     }
 }
